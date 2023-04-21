@@ -104,7 +104,7 @@ EOT;}
             $html .=   "<li><a href='/User/home'>Perfil</a></li>";
         }
 
-        $html .=   "<li><a href='/'>Bar</a></li>";
+        $html .=   "<li><a href='/Place/list'>Lugares</a></li>";
         $html .= "</ul>";
 
         return $html;

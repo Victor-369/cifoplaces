@@ -57,8 +57,8 @@
     define('VIEWS_FOLDER',      '../views');     // para las vistas
     define('TEST_FOLDER',       '../tests');     // para los test
 
-    // imágenes para fotos
-    define('PHOTO_IMAGE_FOLDER', '/images/photo');
+    // imágenes para lugares
+    define('PHOTO_IMAGE_FOLDER', '/images/photos');
     define('DEFAULT_PHOTO_IMAGE', 'defaultphoto.png');
     
     // imágenes para usuarios
