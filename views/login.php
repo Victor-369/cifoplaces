@@ -42,7 +42,8 @@
         				<input type="submit" class="button" name="login" value="LogIn">
         			</div>
         			<div class="derecha">
-        				<a href="/Forgotpassword">Olvidé mi clave</a>
+        				<a href="/User/create">Registro</a>
+						<a href="/Forgotpassword">Olvidé mi clave</a>
         			</div>
         			
         		</form>

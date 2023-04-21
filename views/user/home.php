@@ -18,7 +18,7 @@
     <main>
         <h1><?= APP_NAME ?></h1>
         <section>
-            <h2>Home usuario</h2>
+            <h2>Home <i><?= $user->displayname ?> </i></h2>
             <div class="flex-container">
                 <form method="post" action="/user/store" enctype="multipart/form-data" class="flex2">
                     <label>Nombre</label>

@@ -37,8 +37,8 @@ class Template implements TemplateInterface{
         if(Login::guest())
             return <<<EOT
                <div class='derecha'>
-                    <a class='button' href='/User/create'>Nuevo usuario</a>
-                    <a class='button' href='/Login'>LogIn</a>
+                    <a class='button' href='/User/create'>Registro</a>
+                    <a class='button' href='/Login'>Identificarse</a>
                </div>
 EOT;
         
