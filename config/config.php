@@ -56,6 +56,17 @@
     // carpetas
     define('VIEWS_FOLDER',      '../views');     // para las vistas
     define('TEST_FOLDER',       '../tests');     // para los test
+
+    // imágenes para fotos
+    define('PHOTO_IMAGE_FOLDER', '/images/photo');
+    define('DEFAULT_PHOTO_IMAGE', 'defaultphoto.png');
+    
+    // imágenes para usuarios
+    define('USER_IMAGE_FOLDER', '/images/members');
+    define('DEFAULT_USER_IMAGE', 'defaultmember.png');
+
+    // correo de contacto
+    define('ADMIN_EMAIL', 'user@server.com');
     
     
 /* -------------------------------------------------------------
@@ -86,8 +97,10 @@
     
     // parámetros de configuración de la base de datos
     define('DB_HOST','localhost');  // host
-    define('DB_USER','root');       // usuario
-    define('DB_PASS','');           // password
+    //define('DB_USER','root');       // usuario
+    //define('DB_PASS','');           // password
+    define('DB_USER','pruebas');
+    define('DB_PASS','Clave!1234');
     define('DB_NAME','cifoplaces');  // base de datos
     define('DB_PORT',  3306);       // puerto
     define('DB_CHARSET','utf8');    // codificación
@@ -109,7 +122,7 @@
     define('USER_ROLES', [
         'Usuario'       => 'ROLE_USER',
         'Administrador' => 'ROLE_ADMIN',
-        'Supervisor'    => 'ROLE_MODERATOR'        
+        'Moderador'     => 'ROLE_MODERATOR'
     ]);
     
     // rol para el administrador (debería ser uno de los que están en la lista anterior)
@@ -121,7 +134,8 @@
  * -------------------------------------------------------------*/
     
     // redirección tras login
-    define('REDIRECT_AFTER_LOGIN', '/');
+    //define('REDIRECT_AFTER_LOGIN', '/');
+    define('REDIRECT_AFTER_LOGIN', '/User/home');
     
     
 /* -------------------------------------------------------------

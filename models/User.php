@@ -30,6 +30,17 @@
         
         
         
+        
+        public static function checkEmail($email) {
+            $consulta = "SELECT *  FROM users  
+                         WHERE email = '$email' ";
+            
+            return (DB_CLASS)::select($consulta, self::class);
+        }
+
+
+
+        
         // retorna un usuario a partir de un teléfono y un email 
         // (se usa en "olvidé mi password")
         public static function getByPhoneAndMail(

@@ -37,6 +37,7 @@ class Template implements TemplateInterface{
         if(Login::guest())
             return <<<EOT
                <div class='derecha'>
+                    <a class='button' href='/User/create'>Nuevo usuario</a>
                     <a class='button' href='/Login'>LogIn</a>
                </div>
 EOT;
@@ -99,7 +100,10 @@ EOT;}
         if(Login::isAdmin() && (DB_ERRORS || LOG_ERRORS || LOG_LOGIN_ERRORS))
             $html .=   "<li><a href='/Error/list'>Errores</a></li>";
         
-        $html .=   "<li><a href='/'>Foo</a></li>";
+        if(Login::check()) {
+            $html .=   "<li><a href='/User/home'>Perfil</a></li>";
+        }
+
         $html .=   "<li><a href='/'>Bar</a></li>";
         $html .= "</ul>";
 
