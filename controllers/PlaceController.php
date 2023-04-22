@@ -47,4 +47,34 @@
                             ]);
         }
 
+        public function show(int $id = 0) {
+            if(!$id) {
+                throw new Exception("No se indicó el lugar a mostrar.");
+            }
+
+            $place = Place::getById($id);
+
+            if(!$place) {
+                throw new Exception("No se encontró el lugar indicado.");
+            }
+
+            $photos = $place->hasMany('Photo');
+
+            // Se agrega el autor de la fotografía
+            foreach($photos as $photo) {
+                $photo->owner = $photo->belongsTo('User')->displayname;
+            }
+
+            $comments = $place->hasMany('Comment');
+
+            // Se agrega el autor del comentario
+            foreach($comments as $comment) {
+                $comment->owner = $comment->belongsTo('User')->displayname;
+            }
+
+            $this->loadView("place/show", ['place'    => $place, 
+                                           'photos'   => $photos,
+                                           'comments' => $comments]);
+        }
+
     }
