@@ -103,6 +103,7 @@
             $place->type =          (DB_CLASS)::escape($_POST['type']);
             $place->location =      (DB_CLASS)::escape($_POST['location']);
             $place->description =   (DB_CLASS)::escape($_POST['description']);
+            $place->iduser =        Login::user()->id;
 
             $errores = $place->erroresDeValidacion();
 
@@ -128,5 +129,56 @@
             }
         }
 
+        public function edit(int $id = 0) {
+            if(!$id) {
+                throw new Exception("No se indicó el id");
+            }
 
+            $place = Place::getById($id);
+
+            if(!$place) {
+                throw new Exception("No existe el lugar indicado.");
+            }
+
+            $this->loadView("place/edit", ['place' => $place]);
+        }
+
+        public function update(int $id = 0) {
+            if(empty($_POST['actualizar'])) {
+                throw new Exception("No se recibieron datos.");
+            }
+
+            //$id = intval($_POST['id']);
+            $place = Place::getById($id);
+
+            if(!$place) {
+                throw new Exception("No se ha encontrado el libro $id.");
+            }
+
+            $place->name =          (DB_CLASS)::escape($_POST['name']);
+            $place->type =          (DB_CLASS)::escape($_POST['type']);
+            $place->location =      (DB_CLASS)::escape($_POST['location']);
+            $place->description =   (DB_CLASS)::escape($_POST['description']);
+
+            $errores = $place->erroresDeValidacion();
+
+            if(sizeof($errores)) {
+                throw new Exception(join("<br>", $errores));
+            }
+            
+            try {
+                $place->update();
+
+                Session::flash("success", "Actualización del llugaribro $place->name correcta.");
+                redirect("/Place/edit/$id");
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo actualizar el lugar $place->name.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/Place/edit/$id");
+                }
+            }
+        }
     }

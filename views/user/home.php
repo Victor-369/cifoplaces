@@ -20,7 +20,7 @@
         <section>
             <h2>Home <i><?= $user->displayname ?> </i></h2>
             <div class="flex-container">
-                <form method="post" action="/user/store" enctype="multipart/form-data" class="flex2">
+                <div class="flex2">
                     <label>Nombre</label>
                     <input type="text" value="<?= $user->displayname ?>" disabled>
                     <br>
@@ -29,9 +29,43 @@
                     <br>
                     <label>Teléfono</label>
                     <input type="text" value="<?= $user->phone ?>" disabled>
-                    <br>                    
-                </form>
-                
+                    <br>
+                    <br>
+                    <br>
+
+                    <table>
+                        <tr>
+                            <th>Foto</th>               
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Localización</th>
+                            <th>Descripción</th>
+                            <th>Opciones</th>
+                        </tr>
+
+                        <?php foreach($places as $place) { ?>
+                            <tr>
+                                <td class="centrado">
+                                    <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($place->photo ?? DEFAULT_PHOTO_IMAGE)?>"
+                                        class="cover-mini" alt="Portada de <?= $place->name ?>" width="15%">
+                                </td>
+                                <td><?=$place->name?></td>                    
+                                <td><?=$place->type?></td>
+                                <td><?=$place->location?></td>
+                                <td><?=$place->description?></td>                    
+                                <td>                                    
+                                    <?php if(Login::user()) {
+                                            if(Login::user()->id == $place->iduser) { ?>
+                                                <a class="button" href="/place/edit/<?=$place->id ?>">Modificar</a>                                                  
+                                            <?php } ?>
+                                    <?php } ?>
+                                </td>
+
+                            </tr>
+                        <?php } ?>
+                    </table>
+
+                </div>
 
                 <figure class="flex1 centrado">
                     <img src="<?= USER_IMAGE_FOLDER.'/'.($user->picture ?? DEFAULT_USER_IMAGE) ?>" 

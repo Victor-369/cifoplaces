@@ -5,7 +5,20 @@
         public function home(){
             Auth::check();
 
-            $this->loadView('user/home', ['user' => Login::user()]);
+            $user = Login::user();
+            $places = $user->hasMany('Place');
+
+
+            //Introduce en cada lugar (place) la primera foto del listado de fotos de cada lugar.
+            foreach($places as $place) {                
+                //$place->photo = $place->hasMany('Photo')[0] ?? null;
+                $place->photo = $place->hasMany('Photo')[0]->file ?? null;
+            }
+
+            $this->loadView('user/home', [
+                                          'user'   => Login::user(),
+                                          'places' => $places
+                                         ]);
         }
         
         

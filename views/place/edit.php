@@ -9,34 +9,35 @@
 </head>
 <body>
     <?= (TEMPLATE)::getLogin() ?>
-    <?= (TEMPLATE)::getHeader('Creación de nuevo lugar') ?>
+    <?= (TEMPLATE)::getHeader('Edición del lugar') ?>
     <?= (TEMPLATE)::getMenu() ?>
     <?= (TEMPLATE)::getBreadCrumbs([
-                                    "Nuevo lugar" => "/place/create",
+                                    "Perfil" => "/User/home",
+                                    "Edición de lugar $place->name" => "/Place/edit/$place->id",
                                     ]) ?>
     <?= (TEMPLATE)::getSuccess() ?>
     <?= (TEMPLATE)::getError() ?>
 
     <main>
         <h1><?= APP_NAME ?></h1>
-        <h2><?= "Creación del lugar" ?></h2>
+        <h2><?= "Edición del lugar" ?></h2>
 
         <div class="flex-container">
             <section class="flex1">
-                <form method="post" action="/place/store">
+                <form method="post" action="/place/update/<?= $place->id?>">
                     <label>Nombre</label>
-                    <input type="text" name="name" required>                    
+                    <input type="text" name="name" value="<?= $place->name?>" required>                    
                     <br>
                     <label>Tipo</label>
-                    <input type="text" name="type" required>
+                    <input type="text" name="type" value="<?= $place->type?>" required>
                     <br>
                     <label>Localización</label>
-                    <input type="text" name="location" required>
+                    <input type="text" name="location" value="<?= $place->location?>" required>
                     <br>
                     <label>Descripción</label>
-                    <input type="text" name="description">
+                    <input type="text" name="description" value="<?= $place->description?>">
                     <br>
-                    <input type="submit" class="button" name="guardar" value="Guardar">
+                    <input type="submit" class="button" name="actualizar" value="Actualizar">
                 </form>
             </section>
         </div>
