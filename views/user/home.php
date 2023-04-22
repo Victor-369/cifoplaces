@@ -33,37 +33,40 @@
                     <br>
                     <br>
 
-                    <table>
-                        <tr>
-                            <th>Foto</th>               
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Localización</th>
-                            <th>Descripción</th>
-                            <th>Opciones</th>
-                        </tr>
-
-                        <?php foreach($places as $place) { ?>
+                    <?php if(!Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) { ?>
+                        <table>
                             <tr>
-                                <td class="centrado">
-                                    <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($place->photo ?? DEFAULT_PHOTO_IMAGE)?>"
-                                        class="cover-mini" alt="Portada de <?= $place->name ?>" width="15%">
-                                </td>
-                                <td><?=$place->name?></td>                    
-                                <td><?=$place->type?></td>
-                                <td><?=$place->location?></td>
-                                <td><?=$place->description?></td>                    
-                                <td>                                    
-                                    <?php if(Login::user()) {
-                                            if(Login::user()->id == $place->iduser) { ?>
-                                                <a class="button" href="/place/edit/<?=$place->id ?>">Modificar</a>                                                  
-                                            <?php } ?>
-                                    <?php } ?>
-                                </td>
-
+                                <th>Foto</th>               
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Localización</th>
+                                <th>Descripción</th>
+                                <th>Opciones</th>
                             </tr>
-                        <?php } ?>
-                    </table>
+
+                            <?php foreach($places as $place) { ?>
+                                <tr>
+                                    <td class="centrado">
+                                        <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($place->photo ?? DEFAULT_PHOTO_IMAGE)?>"
+                                            class="cover-mini" alt="Portada de <?= $place->name ?>" width="15%">
+                                    </td>
+                                    <td><?=$place->name?></td>                    
+                                    <td><?=$place->type?></td>
+                                    <td><?=$place->location?></td>
+                                    <td><?=$place->description?></td>                    
+                                    <td>                                    
+                                        <?php if(Login::user()) {
+                                                if(Login::user()->id == $place->iduser) { ?>
+                                                    <a class="button" href="/place/edit/<?=$place->id ?>">Modificar</a>
+                                                    <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
+                                                <?php } ?>
+                                        <?php } ?>
+                                    </td>
+
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    <?php } ?>
 
                 </div>
 

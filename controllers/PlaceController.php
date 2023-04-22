@@ -195,4 +195,64 @@
                 }
             }
         }
+
+        public function delete(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/login');
+            }
+
+            if(!$id) {
+                throw new Exception("No se indicó el lugar a borrar.");
+            }
+
+            $place = Place::getById($id);
+
+            if(!$place) {
+                throw new Exception("No existe el lugar $id.");                    
+            }
+
+            $this->loadView("place/delete", ['place' => $place]);            
+        }
+
+        public function destroy(int $id= 0) {
+            if(empty($_POST['borrar'])) {
+                throw new Exception("No se recibió la confirmación.");
+            }
+            
+            $place = Place::getById($id);
+
+            if(!$place) {
+                throw new Exception("No existe el lugar $id.");                
+            }
+
+            $photos = $place->hasMany('Photo');
+            $comments = $place->hasMany('Comment');
+            
+            try {
+                foreach($photos as $photo) {
+                    @unlink('../public/'.PHOTO_IMAGE_FOLDER.'/'.$photo->file);
+                }
+                
+                $place->deleteObject();
+                
+                foreach($comments as $comment) {
+                    $comment->deleteObject();
+                }
+                                
+                Session::flash("success", "Se ha borrado el lugar $place->name y sus comentarios.");
+                redirect("/place/list");
+
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo borrar el lugar $place->name.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/place/delete/$id");
+                }
+            }
+        }
     }

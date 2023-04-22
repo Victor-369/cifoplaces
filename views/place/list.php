@@ -91,7 +91,7 @@
                                         <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
                                     <?php } ?>
                             <?php } ?>
-                        <?php if(Login::oneRole(['ROLE_ADMIN'])) { ?>
+                        <?php if(Login::oneRole(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR'])) { ?>
                             <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
                         <?php } ?>
                     </td>
