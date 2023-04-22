@@ -35,9 +35,10 @@
                 */
             }
 
-            if($_POST['filtrar'] && $total == 0) {
+            if(!empty($_POST['filtrar']) && $total == 0) {
                 //Session::flash('warning', "No existen resultados para la búsqueda actual.");
-                $filtro = "No existen resultados para la búsqueda actual.";
+                //Session::warning("No existen resultados para la búsqueda actual.");
+                $filtro = "<b>No existen resultados para la búsqueda actual.</b>";
             }
 
             $this->loadView('place/list', [
@@ -76,5 +77,56 @@
                                            'photos'   => $photos,
                                            'comments' => $comments]);
         }
+
+        public function create() {
+            //Auth::oneRole(['ROLE_LIBRARIAN', 'ROLE_ADMIN']);
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/');
+            }
+
+            $this->loadView('place/create', []);
+        }
+
+        public function store() {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
+
+            if(empty($_POST['guardar'])) {
+                throw new Exception("No se recibió el formulario.");
+            }
+
+            $place = new Place();
+
+            $place->name =          (DB_CLASS)::escape($_POST['name']);
+            $place->type =          (DB_CLASS)::escape($_POST['type']);
+            $place->location =      (DB_CLASS)::escape($_POST['location']);
+            $place->description =   (DB_CLASS)::escape($_POST['description']);
+
+            $errores = $place->erroresDeValidacion();
+
+            if(sizeof($errores)) {
+                throw new Exception(join("<br>", $errores));
+            }
+
+            try {
+                $place->save();                
+
+                Session::flash("success", "Guardado del lugar $place->name correcto.");
+                //redirect("/Photo/create/$place->id");
+                $this->loadView("Photo/create", ['place' => $place]);
+
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo guardar el lugar $place->name.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/Place/create");
+                }
+            }
+        }
+
 
     }

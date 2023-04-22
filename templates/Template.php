@@ -100,8 +100,9 @@ EOT;}
         if(Login::isAdmin() && (DB_ERRORS || LOG_ERRORS || LOG_LOGIN_ERRORS))
             $html .=   "<li><a href='/Error/list'>Errores</a></li>";
         
-        if(Login::check()) {
+        if(Login::check() && Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
             $html .=   "<li><a href='/User/home'>Perfil</a></li>";
+            $html .=   "<li><a href='/Place/create'>Nuevo lugar</a></li>";
         }
 
         $html .=   "<li><a href='/Place/list'>Lugares</a></li>";
