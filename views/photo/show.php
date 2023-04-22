@@ -13,7 +13,8 @@
     <?= (TEMPLATE)::getMenu() ?>
     <?= (TEMPLATE)::getBreadCrumbs([
                                     "Lugares" => "/place/list",
-                                    "Detalle del lugar <i>$place->name</i>" => "/place/show/$place->id"
+                                    "Detalle del lugar <i>$place->name</i>" => "/place/show/$place->id",
+                                    "Detalle de la foto <i>$photo->name</i>" => "/photo/show/$photo->id"
                                     ]) ?>
     <?= (TEMPLATE)::getSuccess() ?>
     <?= (TEMPLATE)::getError() ?>
@@ -23,11 +24,11 @@
         
         <div class="flex-container">
             <section class="flex1">
-                <h2>Detalle del lugar <?= $place->name ?></h2>
-                <p><b>Nombre:</b> <?= $place->name ?></p>
-                <p><b>Tipo:</b> <?= $place->type ?></p>
-                <p><b>Localización:</b> <?= $place->location ?></p>
-                <p><b>Descripción:</b> <?= $place->description ?></p>
+                <h2>Detalle de la foto <?= $photo->name ?>, lugar <?= $place->name ?></h2>
+                <p><b>Nombre:</b> <?= $photo->name ?></p>
+                <p><b>Descripción:</b> <?= $photo->description ?></p>
+                <p><b>Fecha:</b> <?= $photo->date ?></p>
+                <p><b>Hora:</b> <?= $photo->time ?></p>
           
                 <br>
                 <h2>Comentarios</h2>
@@ -48,17 +49,13 @@
             </section>
 
             <div class="flex1">
-                <?php foreach($photos as $photo) { ?>                    
-                    <figure class="centrado">
-                        <a href="/Photo/show/<?=$photo->id?>">
-                            <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($photo->file ?? DEFAULT_PHOTO_IMAGE) ?>" 
-                                class="cover" 
-                                alt="Portada de <?= $photo->name ?>"
-                                width="20%">
-                        </a>
-                        <figcaption><?= "$photo->name, de $photo->owner" ?></figcaption>
-                    </figure>
-                <?php } ?>
+                <figure class="centrado">                    
+                    <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($photo->file ?? DEFAULT_PHOTO_IMAGE) ?>" 
+                        
+                        alt="Portada de <?= $photo->name ?>"
+                        width="60%">
+                    <figcaption><?= "$photo->name, de $photo->owner" ?></figcaption>
+                </figure>
             </div>
         </div>
     </main>
