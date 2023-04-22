@@ -20,8 +20,7 @@
             //Introduce en cada lugar (place) la primera foto del listado de fotos de cada lugar.
             foreach($places as $place) {                
                 //$place->photo = $place->hasMany('Photo')[0] ?? null;
-                $tmp = $place->hasMany('Photo')[0] ?? null;
-                $place->photo = $tmp->file;
+                $place->photo = $place->hasMany('Photo')[0]->file ?? null;
 
                 // Problemas para confirmar la existencia de la imagen
                 
@@ -34,6 +33,11 @@
                     $place->photo = null;
                 }
                 */
+            }
+
+            if($_POST['filtrar'] && $total == 0) {
+                //Session::flash('warning', "No existen resultados para la búsqueda actual.");
+                $filtro = "No existen resultados para la búsqueda actual.";
             }
 
             $this->loadView('place/list', [

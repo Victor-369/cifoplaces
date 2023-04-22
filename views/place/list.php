@@ -51,7 +51,7 @@
                 <input class="button" type="submit" name="filtrar" value="Filtrar">                
             </form>
         <?php } ?>
-
+               
 
         <?php if($places) { ?>
             <div class="flex-container">
