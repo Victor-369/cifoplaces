@@ -130,6 +130,13 @@
         }
 
         public function edit(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/');
+            }
+
             if(!$id) {
                 throw new Exception("No se indicó el id");
             }
@@ -144,6 +151,13 @@
         }
 
         public function update(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/');
+            }
+            
             if(empty($_POST['actualizar'])) {
                 throw new Exception("No se recibieron datos.");
             }
