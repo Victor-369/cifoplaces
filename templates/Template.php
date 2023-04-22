@@ -105,6 +105,7 @@ EOT;}
         }
 
         $html .=   "<li><a href='/Place/list'>Lugares</a></li>";
+        $html .=   "<li><a href='/Contacto'>Contacto</a></li>";
         $html .= "</ul>";
 
         return $html;

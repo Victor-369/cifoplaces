@@ -66,7 +66,7 @@
     define('DEFAULT_USER_IMAGE', 'defaultmember.png');
 
     // correo de contacto
-    define('ADMIN_EMAIL', 'user@server.com');
+    define('ADMIN_EMAIL', 'sjggsmybrgclcysmac@tpwlb.com');
     
     
 /* -------------------------------------------------------------
