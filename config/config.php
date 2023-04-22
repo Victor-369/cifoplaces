@@ -97,10 +97,10 @@
     
     // parámetros de configuración de la base de datos
     define('DB_HOST','localhost');  // host
-    define('DB_USER','root');       // usuario
-    define('DB_PASS','');           // password
-    //define('DB_USER','pruebas');
-    //define('DB_PASS','Clave!1234');
+    //define('DB_USER','root');       // usuario
+    //define('DB_PASS','');           // password
+    define('DB_USER','pruebas');
+    define('DB_PASS','Clave!1234');
     define('DB_NAME','cifoplaces');  // base de datos
     define('DB_PORT',  3306);       // puerto
     define('DB_CHARSET','utf8');    // codificación

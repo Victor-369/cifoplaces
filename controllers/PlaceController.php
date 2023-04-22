@@ -19,12 +19,21 @@
 
             //Introduce en cada lugar (place) la primera foto del listado de fotos de cada lugar.
             foreach($places as $place) {                
-                $place->photo = $place->hasMany('Photo')[0] ?? null;
+                //$place->photo = $place->hasMany('Photo')[0] ?? null;
+                $tmp = $place->hasMany('Photo')[0] ?? null;
+                $place->photo = $tmp->file;
+
+                // Problemas para confirmar la existencia de la imagen
                 
-                if(file_exists(PHOTO_IMAGE_FOLDER.'/'.$place->photo->file)) {
-                    //confirma que NO existe el fichero
-                    $place->photo->file = DEFAULT_PHOTO_IMAGE;                    
+                //clearstatcache();
+                //dd(is_file(PHOTO_IMAGE_FOLDER.'/'.$place->photo));
+                //dd(filetype(PHOTO_IMAGE_FOLDER.'/'.$place->photo));
+
+                /*
+                if(!is_readable(PHOTO_IMAGE_FOLDER.'/'.$place->photo)) {
+                    $place->photo = null;
                 }
+                */
             }
 
             $this->loadView('place/list', [

@@ -74,9 +74,9 @@
             </tr>
 
             <?php foreach($places as $place) { ?>
-                <tr>                   
+                <tr>
                     <td class="centrado">
-                        <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($place->photo->file ?? DEFAULT_PHOTO_IMAGE)?>"
+                        <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($place->photo ?? DEFAULT_PHOTO_IMAGE)?>"
                             class="cover-mini" alt="Portada de <?= $place->name ?>" width="15%">
                     </td>
                     <td><?=$place->name?></td>                    
