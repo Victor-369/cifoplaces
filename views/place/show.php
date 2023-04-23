@@ -20,7 +20,6 @@
 
     <main>
         <h1><?= APP_NAME ?></h1>
-        
         <div class="flex-container">
             <section class="flex1">
                 <h2>Detalle del lugar <?= $place->name ?></h2>
@@ -31,6 +30,9 @@
           
                 <br>
                 <h2>Comentarios</h2>
+                <?php if(Login::oneRole(['ROLE_USER'])) { ?>
+                    <a class="button" href='/comment/create/<?=$place->id?>'>Nuevo</a>
+                <?php } ?>
                 <?php
                     if($comments) {
                         $html = "<ul class='listado'>";

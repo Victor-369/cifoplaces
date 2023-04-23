@@ -17,4 +17,11 @@
 
             return $errores;
         }
+        
+        public function hasManyComments():array {
+            
+            $consulta = "SELECT * FROM comments WHERE idplace = ". $this->id . " and idphoto is null order by created_at DESC";
+            
+            return (DB_CLASS)::selectAll($consulta, 'Comment');
+        }
     }

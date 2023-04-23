@@ -66,7 +66,7 @@
                 $photo->owner = $photo->belongsTo('User')->displayname;
             }
 
-            $comments = $place->hasMany('Comment');
+            $comments = $place->hasManyComments();
 
             // Se agrega el autor del comentario
             foreach($comments as $comment) {

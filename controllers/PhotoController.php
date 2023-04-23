@@ -19,7 +19,9 @@
             $place = Place::getById($photo->idplace);
 
             // Comentarios
-            $comments = $photo->hasMany('Comment');
+            //$comments = $photo->hasMany('Comment');
+            $photo->idplace = $place->id;
+            $comments = $photo->hasManyComments();
 
             foreach($comments as $comment) {
                 $comment->owner = $comment->belongsTo('User')->displayname;
