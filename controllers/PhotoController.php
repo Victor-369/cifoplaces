@@ -187,4 +187,72 @@
             }
         }
 
+        public function delete(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/login');
+            }
+
+            if(!$id) {
+                throw new Exception("No se indicó la foto a borrar.");
+            }
+
+            $photo = Photo::getById($id);
+
+            if(!$photo) {
+                throw new Exception("No existe la foto $id.");
+            }
+
+            if($photo->iduser != Login::user()->id
+                || Login::oneRole(['ROLE_MODERATOR', 'ROLE_ADMIN'])) {
+                throw new Exception("Sólo el propietario, moderador o administrador puede borrar la foto.");
+            }
+
+            $place = Place::getById($photo->idplace);
+
+            $this->loadView("photo/delete", [
+                                              'photo' => $photo,
+                                              'place' => $place
+                                            ]);
+        }
+
+        public function destroy(int $id= 0) {
+            if(empty($_POST['borrar'])) {
+                throw new Exception("No se recibió la confirmación.");
+            }
+            
+            $photo = Photo::getById($id);
+
+            if(!$photo) {
+                throw new Exception("No existe la foto $id.");
+            }
+
+            $comments = $photo->hasMany('Comment');
+            $place = Place::getById($photo->idplace);
+            
+            try {
+                @unlink('../public/'.PHOTO_IMAGE_FOLDER.'/'.$photo->file);
+                
+                $photo->deleteObject();
+
+                foreach($comments as $comment) {
+                    $comment->deleteObject();
+                }
+                                
+                Session::flash("success", "Se ha borrado la foto $photo->name y sus comentarios.");
+                redirect("/place/show/$place->id");
+
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo borrar la foto $photo->name.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/photo/delete/$id");
+                }
+            }
+        }
+
     }

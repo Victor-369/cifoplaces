@@ -50,15 +50,18 @@
 
             <div class="flex1">
                 <figure class="centrado">                    
-                    <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($photo->file ?? DEFAULT_PHOTO_IMAGE) ?>" 
-                        
+                    <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($photo->file ?? DEFAULT_PHOTO_IMAGE) ?>"                         
                         alt="Portada de <?= $photo->name ?>"
                         width="60%">
                     <figcaption>
                         <?= "$photo->name, de $photo->owner" ?>
                         <?php if(Login::user()) {
                                     if(Login::user()->id == $photo->iduser) { ?>
-                                        <a class="button" href="/photo/edit/<?=$photo->id ?>">Modificar</a>                                      
+                                        <a class="button" href="/photo/edit/<?=$photo->id ?>">Modificar</a>
+                                        <a class="button" href="/photo/delete/<?=$photo->id ?>">Borrar</a>
+                                    <?php } ?>
+                                    <?php if(Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) { ?>                                        
+                                        <a class="button" href="/photo/delete/<?=$photo->id ?>">Borrar</a>
                                     <?php } ?>
                             <?php } ?>
                     </figcaption>

@@ -64,7 +64,11 @@
                             <?= "$photo->name, de $photo->owner" ?>
                             <?php if(Login::user()) {
                                     if(Login::user()->id == $photo->iduser) { ?>
-                                        <a class="button" href="/photo/edit/<?=$photo->id ?>">Modificar</a>                                      
+                                        <a class="button" href="/photo/edit/<?=$photo->id ?>">Modificar</a>
+                                        <a class="button" href="/photo/delete/<?=$photo->id ?>">Borrar</a>
+                                    <?php } ?>
+                                    <?php if(Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) { ?>                                        
+                                        <a class="button" href="/photo/delete/<?=$photo->id ?>">Borrar</a>
                                     <?php } ?>
                             <?php } ?>
                         </figcaption>
