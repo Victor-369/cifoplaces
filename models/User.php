@@ -80,7 +80,25 @@
                 $usuario->roles = array_unique(json_decode($usuario->roles, JSON_OBJECT_AS_ARRAY));
             
             return $usuario;
-        }   
+        }
+
+
+        
+        // Método para eliminar el usuario del la tabla users y dejar los campos de usuario a null de: places, photos, comments
+        public static function deleteUser(int $id = 0) {
+            $consulta = "update comments set iduser = null where iduser = $id";
+            (DB_CLASS)::update($consulta);
+
+            $consulta = "update photos set iduser = null where iduser = $id";
+            (DB_CLASS)::update($consulta);
+
+            $consulta = "update photos set iduser = null where iduser = $id";
+            (DB_CLASS)::update($consulta);
+
+            $consulta= "delete from users where id = $id";
+            (DB_CLASS)::delete($consulta);
+        }
+
     }
     
     

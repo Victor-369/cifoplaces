@@ -66,14 +66,6 @@
             $user->password =    md5((DB_CLASS)::escape($_POST['password']));
             $user->addRole('ROLE_USER');            
 
-            /*
-            $errores = $user->erroresDeValidacion();
-
-            if(sizeof($errores)) {
-                throw new Exception(join("<br>", $errores));
-            }
-            */
-
             try {
                 $user->save();
 
@@ -112,5 +104,58 @@
             }
         }
 
+        public function delete(int $id = 0) {
+            Auth::check();
+
+            if(!$id) {
+                throw new Exception("No se indicó el usuario a borrar.");
+            }
+
+            $user = User::getById($id);
+
+            if(!$user) {
+                throw new Exception("No existe el usuario $id.");
+            }
+
+            $this->loadView("user/delete", ['user' => $user]);
+        }
+
+        public function destroy(int $id = 0) {
+            Auth::check();
+
+            if(Login::user()->id != $id || !Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
+                throw new Exception("no tienes permiso para eliminar el usuario.");
+            }
+
+            if(empty($_POST['borrar'])) {
+                throw new Exception("No se recibió la confirmación.");
+            }
+
+            $user = User::getById($id);
+
+            if(!$user) {
+                throw new Exception("No existe el usuario $id.");                
+            }
+
+            try {
+                User::deleteUser($id);
+
+                $user->deleteObject();
+
+                @unlink('../public/'.USER_IMAGE_FOLDER.'/'.$user->picture);
+                                
+                Session::flash("success", "Se ha borrado el usuario $user->displayname");
+                redirect("/logout");
+
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo borrar el usuario $user->displayname.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/user/delete/$id");
+                }
+            }
+        }
     }
 
