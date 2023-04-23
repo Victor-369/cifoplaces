@@ -40,7 +40,15 @@
                         $html = "<ul class='listado'>";
 
                         foreach($comments as $comment) {
-                            $html .= "<li>$comment->text (Autor: $comment->owner)</li>";
+                            $html .= "<li>$comment->text (Autor: $comment->owner)";
+                            
+                            if(Login::user()) {
+                                if(Login::user()->id == $comment->iduser || Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) {
+                                    $html .= "<a class='button' href='/comment/deletephoto/$comment->id'>Borrar</a>";
+                                }
+                            }
+                            
+                            $html .="</li>";
                         }
 
                         $html .= "</ul>";

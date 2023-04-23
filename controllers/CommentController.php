@@ -102,4 +102,120 @@
             }
         }
 
+        // Para borrar comentarios en los lugares
+        public function deleteplace(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/login');
+            }
+
+            if(!$id) {
+                throw new Exception("No se indicó el lugar a borrar.");
+            }
+
+            $comment = Comment::getById($id);
+            
+            if(!$comment) {
+                throw new Exception("No existe el comentario $id.");                    
+            }
+
+            $place = Place::getById($comment->idplace);
+            $photo = null;
+
+            $this->loadView("comment/delete", [
+                                               'comment' => $comment,
+                                               'place' => $place,
+                                               'photo' => $photo
+                                              ]);
+        }
+
+        // Para borrar comentarios en los lugares
+        public function destroyplace(int $id= 0, int $idplace = 0) {
+            if(empty($_POST['borrar'])) {
+                throw new Exception("No se recibió la confirmación.");
+            }
+            
+            $comment = Comment::getById($id);
+
+            if(!$comment) {
+                throw new Exception("No existe el comentario $id.");
+            }
+            
+            try {                
+                $comment->deleteObject();             
+                                
+                Session::flash("success", "Se ha borrado el comentario.");
+                redirect("/place/show/$idplace");
+
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo borrar el comentario $comment->id.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/place/show/$idplace");
+                }
+            }
+        }
+
+        // Para borrar comentarios en las fotos
+        public function deletephoto(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/login');
+            }
+
+            if(!$id) {
+                throw new Exception("No se indicó el lugar a borrar.");
+            }
+
+            $comment = Comment::getById($id);
+            
+            if(!$comment) {
+                throw new Exception("No existe el comentario $id.");                    
+            }
+
+            $place = Place::getById($comment->idplace);
+            $photo = Photo::getById($comment->idphoto);
+
+            $this->loadView("comment/delete", [
+                                               'comment' => $comment,
+                                               'place' => $place,
+                                               'photo' => $photo
+                                              ]);
+        }
+
+        // Para borrar comentarios en las fotos
+        public function destroyphoto(int $id= 0, int $idphoto = 0) {
+            if(empty($_POST['borrar'])) {
+                throw new Exception("No se recibió la confirmación.");
+            }
+            
+            $comment = Comment::getById($id);
+
+            if(!$comment) {
+                throw new Exception("No existe el comentario $id.");
+            }
+            
+            try {                
+                $comment->deleteObject();             
+                                
+                Session::flash("success", "Se ha borrado el comentario.");
+                redirect("/photo/show/$idphoto");
+
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo borrar el comentario $comment->id.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/photo/show/$idphoto");
+                }
+            }
+        }
+
     }
