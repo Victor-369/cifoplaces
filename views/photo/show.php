@@ -32,6 +32,9 @@
           
                 <br>
                 <h2>Comentarios</h2>
+                <?php if(Login::oneRole(['ROLE_USER'])) { ?>
+                    <a class="button" href='/comment/create/<?=$place->id?>/<?=$photo->id?>'>Nuevo</a>
+                <?php } ?>
                 <?php
                     if($comments) {
                         $html = "<ul class='listado'>";

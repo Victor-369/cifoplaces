@@ -23,7 +23,11 @@
         <h2><?= "Nuevo comentario" ?></h2>
         <div class="flex-container">
             <section class="flex1">
-                <form method="post" action="/comment/storeplace/<?=$place->id?>">
+                <?php if ($photo == null) { ?>
+                    <form method="post" action="/comment/storeplace/<?=$place->id?>">
+                <?php } else { ?>
+                    <form method="post" action="/comment/storephoto/<?=$place->id?>/<?=$photo->id?>">
+                <?php } ?>
                     <label>Comentario</label>
                     <input type="text" name="text">                    
                     <br>
