@@ -157,5 +157,87 @@
                 }
             }
         }
+
+        public function edit(int $id = 0) {
+            if(Login::user()->id != $id) {
+                throw new Exception("No tienes permiso para editar el usuario.");
+            }
+            
+            $user = User::getById($id);
+
+            if(!$user) {
+                throw new Exception("No se recibió los datos del usuario.");
+            }
+
+            $this->loadView('user/edit', ['user' => $user]);
+        }
+
+        public function update(int $id = 0) {
+            if(empty($_POST['actualizar'])) {
+                throw new Exception('No se recibió el formulario');
+            }
+            
+            $user = User::getById($id);
+
+            $user->displayname =     (DB_CLASS)::escape($_POST['displayname']);
+            $user->email =           (DB_CLASS)::escape($_POST['email']);
+            $user->phone =           (DB_CLASS)::escape($_POST['phone']);
+            
+            if($_POST['password'] =! $_POST['repeatpassword']) {
+                throw new Exception('Las contraseñas no coinciden.');
+            }
+
+            $user->password = md5((DB_CLASS)::escape($_POST['password']));
+
+            try {
+                $user->update();
+
+                $secondUpdate = false;
+                $oldCover = $user->picture;
+
+                if(Upload::arrive('picture')) {
+                    $user->picture = Upload::save(
+                                                    'picture',
+                                                    '../public/'.USER_IMAGE_FOLDER,
+                                                    true,
+                                                    0,
+                                                    'image/*',
+                                                    'user_'
+                                                );
+
+                    $secondUpdate = true;
+                }
+
+                if(isset($_POST['eliminarpicture']) && $oldCover && !Upload::arrive('picture')) {
+                    $user->picture = null;
+                    $secondUpdate = true;
+                }
+
+                if($secondUpdate) {
+                    $user->update();
+                    @unlink('../public/'.USER_IMAGE_FOLDER.'/'.$oldCover);
+                }
+
+                Session::success("Usuario $user->displayname editado con éxito.");
+                redirect("/user/home");
+                
+            } catch(SQLException $e) {
+                Session::error("Se produjo un error al guardar el usuario $user->displayname.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/user/home");
+                }
+            } catch(UploadException $e) {
+                Session::warning("El usuario se guardó correctamente, pero no se pudo subir el fichero de imagen.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/user/home");
+                }
+            }
+        }
     }
 

@@ -30,7 +30,8 @@
                     <label>Teléfono</label>
                     <input type="text" value="<?= $user->phone ?>" disabled>
                     <br>
-                    <a class="button" href="/user/delete/<?= Login::user()->id?>">Baja de usuario</a>
+                    <a class="button" href="/user/edit/<?= Login::user()->id?>">Editar mis datos</a>
+                    <a class="button" href="/user/delete/<?= Login::user()->id?>">Baja de usuario</a>                    
 
                     <?php if(!Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) { ?>
                         <table>
