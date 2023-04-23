@@ -48,9 +48,9 @@ EOT;
         if(Login::isAdmin())
             return <<<EOT
                  <div class='derecha'>
-                    <span>Bienvenido <a class='negrita' href='/User/home'>$user->displayname</a> 
+                    <span>Bienvenido <b><a class='negrita' href='/User/home'>$user->displayname</a></b>
                     (<span class='cursiva'>$user->email</span>)
-                    , eres <a class='negrita' href='/Admin'>administrador</a>.</span> 
+                    , eres <a class='negrita' href='/Admin'>administrador</a>.</span>
                     <a class='button' href='/Logout'>LogOut</a>
                  </div>
 EOT;  
@@ -59,7 +59,7 @@ EOT;
         if(Login::check())
             return <<<EOT
                  <div class='derecha'>
-                    <span>Bienvenido <a href='/User/home'>$user->displayname</a>
+                    <span>Bienvenido <b><a href='/User/home'>$user->displayname</a></b>
                     (<span class='cursiva'>$user->email</span>).</span> 
                     <a class='button' href='/Logout'>LogOut</a>
                  </div>
@@ -100,8 +100,7 @@ EOT;}
         if(Login::isAdmin() && (DB_ERRORS || LOG_ERRORS || LOG_LOGIN_ERRORS))
             $html .=   "<li><a href='/Error/list'>Errores</a></li>";
         
-        if(Login::check() && Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
-            $html .=   "<li><a href='/User/home'>Perfil</a></li>";
+        if(Login::check() && Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {            
             $html .=   "<li><a href='/Place/create'>Nuevo lugar</a></li>";
         }
 
