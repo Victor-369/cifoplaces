@@ -119,6 +119,11 @@
             }
 
             $photo = Photo::getById($id);
+            
+            if($photo->iduser != Login::user()->id) {
+                throw new Exception("Sólo el propietario de la foto la puede editar.");
+            }
+            
             $photo->owner = User::getById($photo->iduser)->displayname;
             $place = Place::getById($photo->idplace);
 
@@ -143,11 +148,16 @@
             if(empty($_POST['actualizar'])) {
                 throw new Exception("No se recibieron datos.");
             }
-            
+
             $photo = Photo::getById($id);
 
+
+            if($photo->iduser != Login::user()->id) {
+                throw new Exception("Sólo el propietario de la foto la puede editar.");
+            }
+
             if(!$photo) {
-                throw new Exception("No se ha encontrado el libro $id.");
+                throw new Exception("No se ha encontrado la foto $id.");
             }
 
             $photo->name =          (DB_CLASS)::escape($_POST['name']);
