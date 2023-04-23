@@ -116,7 +116,7 @@
 
                 Session::flash("success", "Guardado del lugar $place->name correcto.");
                 //redirect("/Photo/create/$place->id");
-                $this->loadView("Photo/create", ['place' => $place]);
+                $this->loadView("photo/create", ['place' => $place]);
 
             } catch(SQLException $e) {
                 Session::flash("error", "No se pudo guardar el lugar $place->name.");
@@ -124,7 +124,7 @@
                 if(DEBUG) {
                     throw new Exception($e->getMessage());
                 } else {
-                    redirect("/Place/create");
+                    redirect("/place/create");
                 }
             }
         }

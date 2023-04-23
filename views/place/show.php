@@ -48,6 +48,10 @@
             </section>
 
             <div class="flex1">
+                <?php if(Login::oneRole(['ROLE_USER']) && empty($photos)) { ?>
+                    <a class="button" href='/photo/create/<?=$place->id?>'>Nueva foto</a>
+                <?php } ?>
+
                 <?php foreach($photos as $photo) { ?>                    
                     <figure class="centrado">
                         <a href="/Photo/show/<?=$photo->id?>">

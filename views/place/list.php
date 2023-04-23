@@ -18,9 +18,6 @@
     <main>
         <h1><?= APP_NAME ?></h1>
         <h2>Lista de lugares</h2>
-        <?php if(Login::oneRole(['ROLE_USER'])) { ?>
-            <a class="button" href='/place/create'>Nuevo anuncio</a>
-        <?php } ?>
         <p>Utiliza el formulario de búsqueda para filtrar resultados. Las búsquedas se mantendrá guardadas aunque cambies de página.</p>
         <?php if(!empty($filtro)) { ?>
             <form class="filtro derecha" method="post" action="/place/list">
@@ -91,7 +88,7 @@
                                         <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
                                     <?php } ?>
                             <?php } ?>
-                        <?php if(Login::oneRole(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR'])) { ?>
+                        <?php if(Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) { ?>
                             <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
                         <?php } ?>
                     </td>

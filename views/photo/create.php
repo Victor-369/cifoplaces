@@ -12,7 +12,8 @@
     <?= (TEMPLATE)::getHeader('Insertar fotos para ' . $place->name) ?>
     <?= (TEMPLATE)::getMenu() ?>
     <?= (TEMPLATE)::getBreadCrumbs([
-                                    "Nuevo lugar" => "/Place/create",
+                                    "Lugares" => "/place/list",
+                                    "Detalles del lugar <i>$place->name</i>" => "/place/show/$place->id",
                                     "Nueva foto" => "/Photo/create",
                                     ]) ?>
     <?= (TEMPLATE)::getSuccess() ?>
@@ -21,25 +22,15 @@
     <main>
         <h1><?= APP_NAME ?></h1>
         <h2><?= "Insertar nueva foto" ?></h2>
-
-        name
-file
-description
-date
-time
-
-
-
-
         <div class="flex-container">
             <section class="flex1">
-                <form method="post" action="/Photo/store/<?=$place->id?>">
+                <form method="post" action="/Photo/store/<?=$place->id?>" enctype="multipart/form-data">
                     <label>Nombre</label>
                     <input type="text" name="name" required>                    
                     <br>
                     <label>Descripción</label>
                     <input type="text" name="description">
-                    <br>                    
+                    <br>
                     <label>Fecha</label>
                     <input type="date" name="date">
                     <br>
@@ -47,11 +38,8 @@ time
                     <input type="time" name="time">
                     <br>
                     <label>Foto</label>
-                        <input type="time" name="time">
-                    <br>
-
-                    
-                    
+                    <input type="file" name="fichero" accept="image/*" required>
+                    <br>                    
                     <input type="submit" class="button" name="guardar" value="Guardar">
                 </form>
             </section>
