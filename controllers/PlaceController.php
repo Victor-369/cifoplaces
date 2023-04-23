@@ -166,7 +166,7 @@
             $place = Place::getById($id);
 
             if(!$place) {
-                throw new Exception("No se ha encontrado el libro $id.");
+                throw new Exception("No se ha encontrado el lugar $id.");
             }
 
             $place->name =          (DB_CLASS)::escape($_POST['name']);
@@ -183,7 +183,7 @@
             try {
                 $place->update();
 
-                Session::flash("success", "Actualización del llugaribro $place->name correcta.");
+                Session::flash("success", "Actualización del lugar $place->name correcta.");
                 redirect("/Place/edit/$id");
             } catch(SQLException $e) {
                 Session::flash("error", "No se pudo actualizar el lugar $place->name.");

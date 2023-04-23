@@ -54,7 +54,14 @@
                         
                         alt="Portada de <?= $photo->name ?>"
                         width="60%">
-                    <figcaption><?= "$photo->name, de $photo->owner" ?></figcaption>
+                    <figcaption>
+                        <?= "$photo->name, de $photo->owner" ?>
+                        <?php if(Login::user()) {
+                                    if(Login::user()->id == $photo->iduser) { ?>
+                                        <a class="button" href="/photo/edit/<?=$photo->id ?>">Modificar</a>                                      
+                                    <?php } ?>
+                            <?php } ?>
+                    </figcaption>
                 </figure>
             </div>
         </div>

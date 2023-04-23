@@ -31,7 +31,6 @@
                                            'comments' => $comments]);
         }
 
-
         public function create(int $idplace = 0) {
             //Auth::oneRole(['ROLE_LIBRARIAN', 'ROLE_ADMIN']);
             Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
@@ -45,9 +44,6 @@
 
             $this->loadView('photo/create', ['place' => $place]);
         }
-
-
-
 
         public function store(int $idplace = 0) {
             Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
@@ -106,6 +102,77 @@
                     throw new Exception($e->getMessage());
                 } else {
                     redirect("/photo/create");
+                }
+            }
+        }
+
+        public function edit(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/login');
+            }
+
+            if(!$id) {
+                throw new Exception("No se indicó el id");
+            }
+
+            $photo = Photo::getById($id);
+            $photo->owner = User::getById($photo->iduser)->displayname;
+            $place = Place::getById($photo->idplace);
+
+            if(!$photo) {
+                throw new Exception("No existe la foto indicada.");
+            }
+
+            $this->loadView("photo/edit", [
+                                            'photo' => $photo,
+                                            'place' => $place,
+                                          ]);
+        }
+
+        public function update(int $id = 0) {
+            Auth::oneRole(['ROLE_USER', 'ROLE_MODERATOR']);
+
+            if(!Login::oneRole(['ROLE_USER', 'ROLE_MODERATOR'])) {
+                Session::error("No tienes permiso para hacer esto.");
+                redirect('/login');
+            }
+            
+            if(empty($_POST['actualizar'])) {
+                throw new Exception("No se recibieron datos.");
+            }
+            
+            $photo = Photo::getById($id);
+
+            if(!$photo) {
+                throw new Exception("No se ha encontrado el libro $id.");
+            }
+
+            $photo->name =          (DB_CLASS)::escape($_POST['name']);
+            $photo->description =   (DB_CLASS)::escape($_POST['description']);
+            $photo->date =          (DB_CLASS)::escape($_POST['date']);
+            $photo->time =          (DB_CLASS)::escape($_POST['time']);
+
+            $errores = $photo->erroresDeValidacion();
+
+            if(sizeof($errores)) {
+                throw new Exception(join("<br>", $errores));
+            }
+            
+            try {
+                $photo->update();
+
+                Session::flash("success", "Actualización de la foto $photo->name correcta.");
+                redirect("/photo/edit/$id");
+            } catch(SQLException $e) {
+                Session::flash("error", "No se pudo actualizar la foto $photo->name.");
+
+                if(DEBUG) {
+                    throw new Exception($e->getMessage());
+                } else {
+                    redirect("/photo/edit/$id");
                 }
             }
         }

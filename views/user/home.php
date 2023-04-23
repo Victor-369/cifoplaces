@@ -57,6 +57,7 @@
                                     <td>                                    
                                         <?php if(Login::user()) {
                                                 if(Login::user()->id == $place->iduser) { ?>
+                                                    <a class="button" href="/place/show/<?=$place->id ?>">Ver</a>
                                                     <a class="button" href="/place/edit/<?=$place->id ?>">Modificar</a>
                                                     <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
                                                 <?php } ?>
