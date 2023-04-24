@@ -40,7 +40,7 @@
                         $html = "<ul class='listado'>";
 
                         foreach($comments as $comment) {
-                            $html .= "<li>$comment->text <i>$comment->owner</i>";
+                            $html .= "<li>$comment->text <b>$comment->owner</b>";
                             
                             if(Login::user()) {
                                 if(Login::user()->id == $comment->iduser || Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) {

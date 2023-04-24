@@ -24,7 +24,8 @@
             $comments = $photo->hasManyComments();
 
             foreach($comments as $comment) {
-                $comment->owner = $comment->belongsTo('User')->displayname;
+                //$comment->owner = $comment->belongsTo('User')->displayname;
+                $comment->owner = Photo::ownerComment($comment->id)->displayname ?? "Anónimo";                
             }
             
 
