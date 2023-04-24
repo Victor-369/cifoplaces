@@ -24,7 +24,7 @@
             // comprobar que llegan los datos
             if(!$this->request->has('login')){
                 Session::error("No se recibió el formulario de LogIn.");
-                redirect('/Login');
+                redirect('/login');
             }
             
             // recuperar usuario (o email) y clave (encriptada)
@@ -42,7 +42,7 @@
                 if(DB_LOGIN_ERRORS)
                     AppError::create('Login', "Intento de identificación incorrecto para $user.");
                     
-                redirect('/Login');
+                redirect('/login');
             }
             
             Login::set($identificado); // vincula el usuario a la sesión

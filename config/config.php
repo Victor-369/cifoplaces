@@ -135,7 +135,7 @@
     
     // redirección tras login
     //define('REDIRECT_AFTER_LOGIN', '/');
-    define('REDIRECT_AFTER_LOGIN', '/User/home');
+    define('REDIRECT_AFTER_LOGIN', '/user/home');
     
     
 /* -------------------------------------------------------------

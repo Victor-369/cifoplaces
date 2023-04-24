@@ -37,8 +37,8 @@ class Template implements TemplateInterface{
         if(Login::guest())
             return <<<EOT
                <div class='derecha'>
-                    <a class='button' href='/User/create'>Registro</a>
-                    <a class='button' href='/Login'>Identificarse</a>
+                    <a class='button' href='/user/create'>Registro</a>
+                    <a class='button' href='/login'>Identificarse</a>
                </div>
 EOT;
         
@@ -48,10 +48,10 @@ EOT;
         if(Login::isAdmin())
             return <<<EOT
                  <div class='derecha'>
-                    <span>Bienvenido <b><a class='negrita' href='/User/home'>$user->displayname</a></b>
+                    <span>Bienvenido <b><a class='negrita' href='/user/home'>$user->displayname</a></b>
                     (<span class='cursiva'>$user->email</span>)
                     , eres <a class='negrita' href='/Admin'>administrador</a>.</span>
-                    <a class='button' href='/Logout'>LogOut</a>
+                    <a class='button' href='/logout'>LogOut</a>
                  </div>
 EOT;  
         
@@ -59,9 +59,9 @@ EOT;
         if(Login::check())
             return <<<EOT
                  <div class='derecha'>
-                    <span>Bienvenido <b><a href='/User/home'>$user->displayname</a></b>
+                    <span>Bienvenido <b><a href='/user/home'>$user->displayname</a></b>
                     (<span class='cursiva'>$user->email</span>).</span> 
-                    <a class='button' href='/Logout'>LogOut</a>
+                    <a class='button' href='/logout'>LogOut</a>
                  </div>
 EOT;    
     

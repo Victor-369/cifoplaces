@@ -25,7 +25,7 @@
 		<main>
 			<section class="flex-container">
     			<div class="flex1"> </div>
-        		<form class="flex2" method="POST" autocomplete="off" id="loginForm" action="/Login/enter">
+        		<form class="flex2" method="POST" autocomplete="off" id="loginForm" action="/login/enter">
         			
         			<h2>Acceso a la aplicación</h2>
     				<p>Introduce tus datos en el formulario para identificarte.</p>
