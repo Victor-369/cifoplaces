@@ -187,7 +187,7 @@
                 throw new Exception('Las contraseñas no coinciden.');
             }
 
-            $user->password = md5((DB_CLASS)::escape($_POST['password']));
+            $user->password = $_POST['password'];
 
             try {
                 $user->update();

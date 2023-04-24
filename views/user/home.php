@@ -77,7 +77,6 @@
                         class="cover" 
                         width="50%"
                         alt="Previsualización de la imagen de perfil">
-                    <figcaption>Previsualización de la imagen de perfil</figcaption>
                 </figure>
             </div>
         </section>

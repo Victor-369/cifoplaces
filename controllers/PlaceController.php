@@ -35,12 +35,6 @@
                 */
             }
 
-            if(!empty($_POST['filtrar']) && $total == 0) {
-                //Session::flash('warning', "No existen resultados para la búsqueda actual.");
-                //Session::warning("No existen resultados para la búsqueda actual.");
-                $filtro = "<b>No existen resultados para la búsqueda actual.</b>";
-            }
-
             $this->loadView('place/list', [
                                             'places'    => $places,
                                             'paginator' => $paginator,

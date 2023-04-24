@@ -59,45 +59,47 @@
             </div>
         <?php } ?>
 
-
-        <table>
-            <tr>
-                <th>Foto</th>               
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Localización</th>
-                <th>Descripción</th>
-                <th>Opciones</th>
-            </tr>
-
-            <?php foreach($places as $place) { ?>
+        <?php if(!$filtro) { ?>
+            <table>
                 <tr>
-                    <td class="centrado">
-                        <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($place->photo ?? DEFAULT_PHOTO_IMAGE)?>"
-                            class="cover-mini" alt="Portada de <?= $place->name ?>" width="15%">
-                    </td>
-                    <td><?=$place->name?></td>                    
-                    <td><?=$place->type?></td>
-                    <td><?=$place->location?></td>
-                    <td><?=$place->description?></td>                    
-                    <td>
-                        <a class="button" href="/place/show/<?=$place->id ?>">Ver</a>
-                        <?php if(Login::user()) {
-                                    if(Login::user()->id == $place->iduser) { ?>
-                                        <a class="button" href="/place/edit/<?=$place->id ?>">Modificar</a>
-                                        <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
-                                    <?php } ?>
-                            <?php } ?>
-                        <?php if(Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) { ?>
-                            <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
-                        <?php } ?>
-                    </td>
-
+                    <th>Foto</th>               
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Localización</th>
+                    <th>Descripción</th>
+                    <th>Opciones</th>
                 </tr>
-            <?php } ?>
-        </table>
-        <?= $paginator->ellipsisLinks() ?>
 
+                <?php foreach($places as $place) { ?>
+                    <tr>
+                        <td class="centrado">
+                            <img src="<?= PHOTO_IMAGE_FOLDER.'/'.($place->photo ?? DEFAULT_PHOTO_IMAGE)?>"
+                                class="cover-mini" alt="Portada de <?= $place->name ?>" width="15%">
+                        </td>
+                        <td><?=$place->name?></td>                    
+                        <td><?=$place->type?></td>
+                        <td><?=$place->location?></td>
+                        <td><?=$place->description?></td>                    
+                        <td>
+                            <a class="button" href="/place/show/<?=$place->id ?>">Ver</a>
+                            <?php if(Login::user()) {
+                                        if(Login::user()->id == $place->iduser) { ?>
+                                            <a class="button" href="/place/edit/<?=$place->id ?>">Modificar</a>
+                                            <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
+                                        <?php } ?>
+                                <?php } ?>
+                            <?php if(Login::oneRole(['ROLE_ADMIN', 'ROLE_MODERATOR'])) { ?>
+                                <a class="button" href="/place/delete/<?=$place->id ?>">Borrar</a>
+                            <?php } ?>
+                        </td>
+
+                    </tr>
+                <?php } ?>
+            </table>
+            <?= $paginator->ellipsisLinks() ?>
+        <?php } else { 
+            echo "<p class='error'>No hay lugares para mostrar en base al filtro introducido.</p>" ?>
+        <?php } ?>
     </main>
     <?= (TEMPLATE)::getFooter() ?>
 </body>
