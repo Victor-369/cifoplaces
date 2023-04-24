@@ -62,10 +62,14 @@
 
             $comments = $place->hasManyComments();
 
+
             // Se agrega el autor del comentario
             foreach($comments as $comment) {
-                $comment->owner = $comment->belongsTo('User')->displayname;
-            }
+                //$comment->owner = $comment->belongsTo('User')->displayname;
+                $comment->owner = Place::ownerComment($comment->id)->displayname ?? "Anónimo";                
+            }            
+
+
 
             $this->loadView("place/show", ['place'    => $place, 
                                            'photos'   => $photos,
