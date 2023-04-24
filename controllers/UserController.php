@@ -83,7 +83,7 @@
                 }
 
                 Session::success("Nuevo usuario $user->displayname creado con éxito.");                
-                $this->home(); //redirect("/");
+                redirect("/login");
                 
             } catch(SQLException $e) {
                 Session::error("Se produjo un error al guardar el usuario $user->displayname.");
@@ -99,7 +99,7 @@
                 if(DEBUG) {
                     throw new Exception($e->getMessage());
                 } else {
-                    redirect('/');
+                    redirect('/login');
                 }
             }
         }
