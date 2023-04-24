@@ -35,7 +35,7 @@
                     <label>Password</label>
                     <input type="password" name="password" required>
                     <br>
-                    <label>Repetir</label>
+                    <label>Repetir password</label>
                     <input type="password" name="repeatpassword">
                     <br>                    
                     <label>Imagen de perfil</label>

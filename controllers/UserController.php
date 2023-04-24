@@ -187,7 +187,8 @@
                 throw new Exception('Las contraseñas no coinciden.');
             }
 
-            $user->password = $_POST['password'];
+            //$user->password = $_POST['password'];
+            $user->password = md5($_POST['repeatpassword']);
 
             try {
                 $user->update();
@@ -219,6 +220,7 @@
                 }
 
                 Session::success("Usuario $user->displayname editado con éxito.");
+                Login::set($user); // refresca los datos del usuario por pantalla
                 redirect("/user/home");
                 
             } catch(SQLException $e) {
