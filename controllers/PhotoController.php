@@ -21,13 +21,10 @@
             // Comentarios
             //$comments = $photo->hasMany('Comment');
             $photo->idplace = $place->id;
-            $comments = $photo->hasManyComments();
-
-            foreach($comments as $comment) {
-                //$comment->owner = $comment->belongsTo('User')->displayname;
-                $comment->owner = Photo::ownerComment($comment->id)->displayname ?? "Anónimo";                
-            }
-            
+           
+            //$comments = $photo->hasManyComments();
+            $comments = Photo::hasManyComments($place->id, $photo->id);
+           
 
             $this->loadView("photo/show", ['photo'    => $photo,
                                            'place'    => $place,

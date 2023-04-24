@@ -11,21 +11,13 @@
             return $errores;
         }
 
-        
-        public function hasManyComments():array {
-            
-            $consulta = "SELECT * FROM comments WHERE idphoto = ". $this->id . " and idplace = " . $this->idplace . " order by created_at DESC";
-            
+        public static function hasManyComments(int $idplace = 0, int $idphoto = 0):array {
+            $consulta = "SELECT c.*, NVL(u.displayname, 'Anónimo') owner 
+                        FROM comments c 
+                        left join users u on (c.iduser = u.id)
+                        WHERE c.idplace = $idplace 
+                        and c.idphoto = $idphoto order by created_at DESC";
+
             return (DB_CLASS)::selectAll($consulta, 'Comment');
-        }        
-
-        public static function ownerComment(int $idcomment = 0):object {
-            
-            $consulta = "SELECT u.displayname
-                        FROM comments c
-                            left join users u on (c.iduser = u.id)
-                        WHERE c.id = $idcomment";
-
-            return (DB_CLASS)::select($consulta, 'stdClass');
         }
     }
