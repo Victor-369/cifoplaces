@@ -27,7 +27,9 @@
                 <p><b>Tipo:</b> <?= $place->type ?></p>
                 <p><b>Localización:</b> <?= $place->location ?></p>
                 <p><b>Descripción:</b> <?= $place->description ?></p>
-          
+                <?php if(Login::oneRole(['ROLE_USER'])) { ?>
+                    <a class="button" href='/photo/create/<?=$place->id?>'>Nueva foto</a>
+                <?php } ?>
                 <br>
                 <h2>Comentarios</h2>
                 <?php if(Login::oneRole(['ROLE_USER'])) { ?>
