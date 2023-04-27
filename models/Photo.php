@@ -12,7 +12,7 @@
         }
 
         public static function hasManyComments(int $idplace = 0, int $idphoto = 0):array {
-            $consulta = "SELECT c.*, NVL(u.displayname, 'Anónimo') owner 
+            $consulta = "SELECT c.*, u.displayname as owner 
                         FROM comments c 
                         left join users u on (c.iduser = u.id)
                         WHERE c.idplace = $idplace 
