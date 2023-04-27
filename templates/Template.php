@@ -252,8 +252,8 @@ EOT: '';}
     public static function getFooter(){
         return <<<EOT
         <footer class='primary'>
-            <p>Desarrollado por <a href="https://robertsallent.com">
-                Robert Sallent</a> para sus cursos de desarrollo de aplicaciones web (2023).
+            <p>Usado el framework <a href="https://github.com/robertsallent">Fastlight</a>, desarrollado por <a href="https://robertsallent.com">
+                Robert Sallent</a>.
             </p>
         </footer>
 EOT;} 
